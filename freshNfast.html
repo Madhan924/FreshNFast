@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>freshNfast — Online Food Delivery</title>
+  <meta name="description" content="freshNfast delivers your favorite meals fast. Order food online from nearby restaurants. Inspired by modern e‑commerce layouts." />
+  <meta name="keywords" content="food delivery, order food online, biryani, pizza, burgers, delivery near me" />
+  <meta name="theme-color" content="#e23744" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Google Analytics (paste your GA4 Measurement ID in data-id below) -->
+  <script>
+    // Replace G-XXXXXXXXXX with your ID or inject via data attribute
+    const GA_ID = document.currentScript.dataset.id || 'G-XXXXXXXXXX';
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date());
+    gtag('config', GA_ID);
+  </script>
+  
+  <style>
+    :root{
+      --brand:#e23744;       /* Zomato-esque red */
+      --brand-600:#c42f3a;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --bg:#ffffff;
+      --bg-soft:#fafafa;
+      --card:#ffffff;
+      --ring:rgba(226,55,68,.35);
+      --radius:16px;
+      --shadow:0 10px 24px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:var(--bg)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1200px;margin-inline:auto;padding:0 16px}
+    header{position:sticky;top:0;background:#fff;z-index:50;border-bottom:1px solid #eee;backdrop-filter:saturate(180%) blur(6px)}
+    .topbar{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .logo-badge{width:36px;height:36px;border-radius:12px;background:var(--brand);display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)}
+    .search{flex:1;display:flex;gap:10px;align-items:center;background:var(--bg-soft);padding:10px 12px;border-radius:12px;border:1px solid #eee}
+    .search input{flex:1;border:none;outline:none;background:transparent;font-size:14px}
+    .actions{display:flex;gap:10px}
+    .btn{appearance:none;border:none;cursor:pointer;border-radius:12px;padding:10px 14px;font-weight:600}
+    .btn.brand{background:var(--brand);color:#fff}
+    .btn.ghost{background:#fff;border:1px solid #eee}
+
+    nav{border-top:1px solid #f3f4f6}
+    .nav-links{display:flex;gap:18px;overflow:auto;padding:10px 0}
+    .nav-links a{color:var(--muted);font-weight:600;white-space:nowrap}
+    .nav-links a.active, .nav-links a:hover{color:var(--brand)}
+
+    .hero{background:linear-gradient(180deg,#fff, #fff 60%, #fff0 100%), url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat; border-radius:24px;margin:22px 0;position:relative;overflow:hidden}
+    .hero-inner{padding:64px 24px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+    .hero h1{font-size:42px;line-height:1.05;margin:0 0 10px}
+    .hero p{color:#374151;margin:0 0 22px}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #eee;padding:6px 10px;border-radius:999px;font-weight:600;color:var(--brand)}
+
+    .pill-input{display:flex;gap:8px;background:#fff;border:1px solid #eee;border-radius:999px;padding:8px 8px 8px 12px;max-width:520px}
+    .pill-input input{border:none;outline:none;font-size:15px;flex:1}
+
+    .grid{display:grid;gap:18px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-4{grid-template-columns:repeat(4,1fr)}
+    @media (max-width:980px){.hero-inner{grid-template-columns:1fr}.grid.cols-3{grid-template-columns:repeat(2,1fr)}.grid.cols-4{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.grid.cols-3,.grid.cols-4{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border:1px solid #eee;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+    .card .content{padding:14px}
+    .price{font-weight:800}
+    .muted{color:var(--muted)}
+
+    .category{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;border:1px solid #eee;background:#fff;box-shadow:var(--shadow)}
+    .category .icon{width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid #eee;display:grid;place-items:center}
+
+    .section{padding:4px 0 28px}
+    .section h2{margin:0 0 8px}
+    .section p{margin:0 0 16px;color:var(--muted)}
+
+    .feature{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid #eee;border-radius:14px;background:#fff}
+
+    .cta{margin:32px 0;padding:24px;border-radius:20px;background:linear-gradient(135deg,var(--brand), var(--brand-600));color:#fff;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+    footer{margin-top:40px;padding:28px 0;border-top:1px solid #eee;background:#fff}
+    .foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px}
+    .foot h4{margin:0 0 10px}
+    .foot a{color:var(--muted)}
+    @media (max-width:900px){.foot{grid-template-columns:1fr 1fr}}
+
+    /* Cart Drawer */
+    .drawer{position:fixed;inset:0;pointer-events:none}
+    .drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;transition:.2s}
+    .drawer.open .backdrop{opacity:1;pointer-events:auto}
+    .drawer .panel{position:absolute;right:-420px;top:0;height:100%;width:380px;background:#fff;border-left:1px solid #eee;box-shadow:var(--shadow);transition:.25s;padding:18px;display:flex;flex-direction:column;gap:12px}
+    .drawer.open .panel{right:0;pointer-events:auto}
+    .cart-item{display:flex;gap:10px;align-items:center;border:1px solid #eee;padding:10px;border-radius:12px}
+    .qty{display:flex;gap:8px;align-items:center}
+    .qty button{width:28px;height:28px;border-radius:8px;border:1px solid #eee;background:#fff;font-weight:700}
+
+    .tag{display:inline-block;background:#fff;border:1px solid #eee;padding:6px 10px;border-radius:999px;color:var(--muted);font-weight:600}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <a href="#" class="logo" aria-label="freshNfast Home">
+        <span class="logo-badge">ff</span>
+        <span>freshNfast</span>
+      </a>
+      <label class="search" aria-label="Search menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.3-4.3" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="7" stroke="#9ca3af" stroke-width="2"/></svg>
+        <input type="search" placeholder="Search dishes, restaurants, cuisines..." />
+      </label>
+      <div class="actions">
+        <button class="btn ghost" id="btnLogin">Sign in</button>
+        <button class="btn brand" id="btnCart">Cart · <span id="cartCount">0</span></button>
+      </div>
+    </div>
+    <nav>
+      <div class="container nav-links">
+        <a class="active" href="#popular">Popular</a>
+        <a href="#categories">Categories</a>
+        <a href="#deals">Deals</a>
+        <a href="#features">Why Us</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#newsletter">Newsletter</a>
+        <a href="#footer">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-inner">
+        <div>
+          <span class="badge">🚀 30-minute average delivery</span>
+          <h1>Fresh food, delivered fast.</h1>
+          <p>Order from top-rated restaurants around you. Real-time tracking, secure payments, and exclusive deals—right here.</p>
+          <div class="pill-input" role="search">
+            <input id="location" placeholder="Enter your location (e.g., Madhapur, Hyderabad)" />
+            <button class="btn brand" onclick="alert('Location saved!')">Set</button>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <span class="tag">Biryani</span>
+            <span class="tag">Pizza</span>
+            <span class="tag">Burgers</span>
+            <span class="tag">Desserts</span>
+          </div>
+        </div>
+        <div class="card">
+          <img alt="Assorted dishes" src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1200&auto=format&fit=crop" />
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section id="categories" class="section">
+      <h2>Browse by category</h2>
+      <p>Pick your craving and we will bring it to your door.</p>
+      <div class="grid cols-4">
+        <div class="category"><div class="icon">🍛</div><div><strong>Biryani</strong><div class="muted">Spicy & flavorful</div></div></div>
+        <div class="category"><div class="icon">🍕</div><div><strong>Pizza</strong><div class="muted">Cheesy goodness</div></div></div>
+        <div class="category"><div class="icon">🍔</div><div><strong>Burgers</strong><div class="muted">Grilled & loaded</div></div></div>
+        <div class="category"><div class="icon">🧁</div><div><strong>Desserts</strong><div class="muted">Sweet treats</div></div></div>
+      </div>
+    </section>
+
+    <!-- POPULAR PRODUCTS / DISHES -->
+    <section id="popular" class="section">
+      <h2>Popular near you</h2>
+      <p>Top picks customers love. Add to cart and checkout in seconds.</p>
+      <div class="grid cols-3" id="cards">
+        <!-- Cards injected by JS for clarity & reusability -->
+      </div>
+    </section>
+
+    <!-- FEATURES / BENEFITS -->
+    <section id="features" class="section">
+      <h2>Why choose freshNfast?</h2>
+      <div class="grid cols-3">
+        <div class="feature"><div>⚡</div><div><strong>Lightning-fast delivery</strong><div class="muted">Average 30-min delivery with live tracking.</div></div></div>
+        <div class="feature"><div>🛡️</div><div><strong>Secure payments</strong><div class="muted">UPI, cards, and wallets with encryption.</div></div></div>
+        <div class="feature"><div>🌱</div><div><strong>Freshly prepared</strong><div class="muted">Partnered with hygienic, top-rated restaurants.</div></div></div>
+      </div>
+    </section>
+
+    <!-- CTA STRIP -->
+    <section id="deals" class="cta" aria-label="Deals">
+      <div>
+        <h3 style="margin:0">Flat 30% OFF on your first order</h3>
+        <div class="muted">Use code: FRESH30 · T&C apply</div>
+      </div>
+      <button class="btn ghost" onclick="scrollTo(0,0)">Start Ordering</button>
+    </section>
+
+    <!-- TESTIMONIALS (static) -->
+    <section id="testimonials" class="section">
+      <h2>What customers say</h2>
+      <div class="grid cols-3">
+        <div class="card"><div class="content"><strong>Mahesh</strong><div class="muted">Hyderabad</div><p>“Quick delivery and hot food. Loved the biryani!”</p></div></div>
+        <div class="card"><div class="content"><strong>Ankita</strong><div class="muted">Bengaluru</div><p>“Super smooth checkout. The app-like website is 🔥.”</p></div></div>
+        <div class="card"><div class="content"><strong>Yusuf</strong><div class="muted">Pune</div><p>“Great deals and reliable restaurants. Recommended.”</p></div></div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="newsletter" class="section">
+      <h2>Get deals in your inbox</h2>
+      <p>We send one email per week. No spam, unsubscribe anytime.</p>
+      <div class="pill-input" role="form" aria-label="Subscribe to newsletter">
+        <input type="email" id="email" placeholder="Enter your email" />
+        <button class="btn brand" onclick="subscribe()">Subscribe</button>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="container foot">
+      <div>
+        <div class="logo" style="margin-bottom:10px"><span class="logo-badge">ff</span><span>freshNfast</span></div>
+        <p class="muted">Inspired by modern e‑commerce layouts. Built for speed, clarity, and conversions.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About</a><br/>
+        <a href="#">Careers</a><br/>
+        <a href="#">Press</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="#">Support</a><br/>
+        <a href="#">FAQs</a><br/>
+        <a href="#">Contact</a>
+      </div>
+      <div>
+        <h4>Social</h4>
+        <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a><br/>
+        <a href="https://facebook.com/" target="_blank" rel="noopener">Facebook</a><br/>
+        <a href="https://x.com/" target="_blank" rel="noopener">X (Twitter)</a>
+      </div>
+    </div>
+    <div class="container" style="margin-top:14px;color:var(--muted);font-size:13px">© <span id="year"></span> freshNfast. All rights reserved.</div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="drawer" id="drawer">
+    <div class="backdrop" onclick="toggleCart(false)"></div>
+    <aside class="panel" role="dialog" aria-label="Shopping cart">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <strong>Your Cart</strong>
+        <button class="btn ghost" onclick="toggleCart(false)">Close</button>
+      </div>
+      <div id="cartItems" style="flex:1;overflow:auto"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="muted">Subtotal</div>
+        <div class="price" id="subtotal">₹0</div>
+      </div>
+      <button class="btn brand" style="width:100%" onclick="alert('Checkout coming soon')">Checkout</button>
+    </aside>
+  </div>
+
+  <script>
+    const products = [
+      {id:1, name:'Hyderabadi Chicken Biryani', img:'https://images.unsplash.com/photo-1604908554007-0271c3b3b2ff?q=80&w=1200&auto=format&fit=crop', price:259, rating:4.6},
+      {id:2, name:'Margherita Pizza', img:'https://images.unsplash.com/photo-1548365328-9f547fb0953b?q=80&w=1200&auto=format&fit=crop', price:199, rating:4.5},
+      {id:3, name:'Classic Cheeseburger', img:'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop', price:179, rating:4.4},
+      {id:4, name:'Veggie Loaded Pizza', img:'https://images.unsplash.com/photo-1541745537413-b804b0dcd577?q=80&w=1200&auto=format&fit=crop', price:229, rating:4.3},
+      {id:5, name:'Chicken Shawarma Roll', img:'https://images.unsplash.com/photo-1606756790138-261c8b66bd38?q=80&w=1200&auto=format&fit=crop', price:149, rating:4.2},
+      {id:6, name:'Chocolate Lava Cake', img:'https://images.unsplash.com/photo-1606313564200-e75d5e30476e?q=80&w=1200&auto=format&fit=crop', price:129, rating:4.7}
+    ];
+
+    const cards = document.getElementById('cards');
+    const cart = new Map();
+
+    function formatINR(n){return '₹' + n.toLocaleString('en-IN')}
+
+    function renderCards(){
+      cards.innerHTML = products.map(p => `
+        <article class="card" aria-label="${p.name}">
+          <img alt="${p.name}" src="${p.img}" loading="lazy" />
+          <div class="content">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <strong>${p.name}</strong>
+              <span class="muted">★ ${p.rating}</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+              <span class="price">${formatINR(p.price)}</span>
+              <button class="btn ghost" onclick='addToCart(${JSON.stringify(p.id)})'>Add</button>
+            </div>
+          </div>
+        </article>`).join('');
+    }
+
+    function addToCart(id){
+      cart.set(id, (cart.get(id)||0)+1);
+      updateCartUI();
+    }
+
+    function removeFromCart(id){
+      if(!cart.has(id)) return; const q=cart.get(id)-1; if(q<=0) cart.delete(id); else cart.set(id,q); updateCartUI();
+    }
+
+    function toggleCart(open){
+      const dr = document.getElementById('drawer');
+      dr.classList.toggle('open', open);
+      dr.style.pointerEvents = open ? 'auto' : 'none';
+    }
+
+    function updateCartUI(){
+      const items = Array.from(cart.entries()).map(([id,qty])=>{const p=products.find(x=>x.id===id);return {...p, qty}});
+      document.getElementById('cartCount').textContent = items.reduce((a,c)=>a+c.qty,0);
+      const wrap = document.getElementById('cartItems');
+      wrap.innerHTML = items.length? items.map(it=>`
+        <div class="cart-item">
+          <img src="${it.img}" alt="${it.name}" style="width:64px;height:64px;object-fit:cover;border-radius:10px"/>
+          <div style="flex:1">
+            <div style="font-weight:600">${it.name}</div>
+            <div class="muted">${formatINR(it.price)}</div>
+          </div>
+          <div class="qty">
+            <button aria-label="Decrease quantity" onclick="removeFromCart(${it.id})">-</button>
+            <div aria-live="polite">${it.qty}</div>
+            <button aria-label="Increase quantity" onclick="addToCart(${it.id})">+</button>
+          </div>
+        </div>`).join('') : '<div class="muted">Your cart is empty.</div>';
+      const subtotal = items.reduce((a,c)=>a + c.price*c.qty,0);
+      document.getElementById('subtotal').textContent = formatINR(subtotal);
+    }
+
+    document.getElementById('btnCart').addEventListener('click', ()=>toggleCart(true));
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderCards();
+
+    function subscribe(){
+      const email = document.getElementById('email').value.trim();
+      if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Enter a valid email'); return; }
+      alert('Subscribed! Check your inbox.');
+    }
+  </script>
+
+  <!-- Structured data for SEO (LocalBusiness example) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodDelivery",
+    "name": "freshNfast",
+    "areaServed": "India",
+    "url": "https://example.com",
+    "sameAs": ["https://instagram.com/", "https://facebook.com/", "https://x.com/"],
+    "offers": {"@type":"AggregateOffer","priceCurrency":"INR","lowPrice":"99"}
+  }
+  </script>
+</body>
+</html>
